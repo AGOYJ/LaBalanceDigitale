@@ -42,10 +42,10 @@ $recettes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </nav>
 <div class="recette-box" style="max-width:900px;">
     <h1>Toutes les recettes</h1>
-    <a href="ajouter_recette.php" style="display:inline-block;background:#1976d2;color:#fff;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:bold;margin-bottom:18px;">+ Ajouter une recette</a>
+    <a href="ajouter_recette.php" class="btn-primary" style="margin-bottom:18px;display:inline-block;">+ Ajouter une recette</a>
     <form class="search-bar" method="get" action="recettes.php">
         <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Rechercher une recette...">
-        <button type="submit">Rechercher</button>
+        <button type="submit" class="btn-primary">Rechercher</button>
         <a href="recettes.php?order=alpha<?= $search ? '&search=' . urlencode($search) : '' ?>" class="<?= $order==='alpha'?'selected':'' ?>">Trier A-Z</a>
         <a href="recettes.php<?= $search ? '?search=' . urlencode($search) : '' ?>" class="<?= $order==='date'?'selected':'' ?>">Trier par date</a>
     </form>
@@ -60,7 +60,7 @@ $recettes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <td><?= htmlspecialchars($recette['titre']) ?></td>
             <td><?= htmlspecialchars($recette['date_creation']) ?></td>
             <td>
-                <a href="recette.php?id=<?= $recette['id'] ?>" style="color:#1976d2;font-weight:bold;">Voir</a>
+                <a href="recette.php?id=<?= $recette['id'] ?>" class="btn-primary" style="padding:6px 14px;">Voir</a>
             </td>
         </tr>
         <?php endforeach; ?>

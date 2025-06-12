@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Accueil - Gestion de Recettes</title>
+    <title>Accueil</title>
     <link rel="stylesheet" href="assets/css/style.css"> 
 </head>
 <body>
@@ -22,6 +22,7 @@ if (!isset($_SESSION['user_id'])) {
 <div class="dashboard-container">
     <div class="dashboard-card">
         <h1>Bienvenue sur votre gestionnaire de recettes !</h1>
+        <p>La Balance Digitale est une application web dédiée aux artisans boulangers, pâtissiers, chocolatiers, et confiseurs. elle permet de centraliser, gérer et adapter facilement les recettes, en calculant automatiquement les quantités nécessaires selon la production, les information lié au coût de fabrication et d’autres informations utiles. Pensée pour les professionnels exigeants, elle facilite la création, la modification et l’expérimentation de nouvelles recettes.</p>
         <p>Utilisez le menu pour accéder rapidement aux principales fonctionnalités :</p>
         <ul class="dashboard-list">
             <li><a href="recettes.php">Voir toutes les recettes</a></li>

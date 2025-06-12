@@ -81,13 +81,13 @@ $ingredients = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <form method="post" style="margin-bottom:18px;display:flex;gap:12px;align-items:center;">
         <input type="text" name="nom" placeholder="Nom de l'ingrédient" required style="width:40%">
         <input type="number" step="0.000001" name="prix_kg" placeholder="Prix au kg (€)" required style="width:30%">
-        <button type="submit" name="add_ingredient" style="background:#43a047;color:#fff;border:none;border-radius:6px;padding:8px 18px;font-weight:bold;">+ Ajouter</button>
+        <button type="submit" name="add_ingredient" class="btn-primary">+ Ajouter</button>
     </form>
     <form class="search-bar" method="get" action="ingredients.php" style="margin-bottom:18px;display:flex;gap:12px;align-items:center;">
         <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Rechercher un ingrédient...">
-        <button type="submit">Rechercher</button>
+        <button type="submit" class="btn-primary">Rechercher</button>
         <?php if ($search): ?>
-            <a href="ingredients.php" style="background:#d32f2f;color:#fff;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:bold;">Réinitialiser</a>
+            <a href="ingredients.php">Réinitialiser</a>
         <?php endif; ?>
     </form>
     <table class="ingredients-table">
@@ -104,7 +104,7 @@ $ingredients = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <form method="post" style="display:inline;">
                     <input type="hidden" name="id" value="<?= $ing['id'] ?>">
                     <input type="number" step="0.000001" name="prix_kg" value="<?= htmlspecialchars($ing['prix_kg']) ?>" style="width:90px;">
-                    <button type="submit" name="edit_ingredient" style="background:#1976d2;color:#fff;border:none;border-radius:4px;padding:4px 10px;margin-left:4px;">💾</button>
+                    <button type="submit" name="edit_ingredient" class="btn-primary">💾</button>
                 </form>
             </td>
             <td><?= number_format($ing['prix_kg']/1000, 6, ',', ' ') ?></td>

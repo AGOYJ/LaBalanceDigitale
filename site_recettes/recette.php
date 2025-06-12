@@ -98,11 +98,11 @@ if (isset($_POST['delete_recette']) && $_POST['delete_recette'] == $recette['id'
 }
 ?>
 <div class="recette-box">
-    <a href="recettes.php" style="display:inline-block;background:#1976d2;color:#fff;padding:8px 18px;border-radius:6px;text-decoration:none;font-weight:bold;margin-bottom:18px;">← Retour à la liste des recettes</a>
-    <a href="modifier_recette.php?id=<?= $recette['id'] ?>" style="display:inline-block;background:#43a047;color:#fff;padding:8px 18px;border-radius:6px;text-decoration:none;font-weight:bold;margin-left:10px;">✏️ Modifier</a>
+    <a href="recettes.php" class="btn-primary" style="margin-bottom:18px;">← Retour à la liste des recettes</a>
+    <a href="modifier_recette.php?id=<?= $recette['id'] ?>" class="btn-primary" style="margin-left:10px;background:#43a047;">✏️ Modifier</a>
     <form method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ? Cette action est irréversible.');" style="display:inline-block;margin-left:10px;">
         <input type="hidden" name="delete_recette" value="<?= $recette['id'] ?>">
-        <button type="submit" style="background:#d32f2f;color:#fff;padding:8px 18px;border:none;border-radius:6px;font-weight:bold;cursor:pointer;">🗑️ Supprimer</button>
+        <button type="submit" class="btn-suppr">🗑️ Supprimer</button>
     </form>
     <h1><?= htmlspecialchars($recette['titre']) ?></h1>
     <label>Multiplicateur :</label>

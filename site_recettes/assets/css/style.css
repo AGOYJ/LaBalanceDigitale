@@ -16,13 +16,6 @@ html, body {
     text-align: center;
     font-size: 1.08em;
 }
-.menu a {
-    color: #1976d2;
-    text-decoration: none;
-    margin: 0 10px;
-    font-weight: 500;
-    transition: color 0.2s;
-}
 .menu a:hover {
     color: #43a047;
 }
@@ -67,7 +60,7 @@ input[type="number"] {
 input[type="text"], input[type="password"], textarea {
     width: 100%;
 }
-button, .btn-suppr {
+button, .btn-primary {
     background: #1976d2;
     color: #fff;
     border: none;
@@ -76,9 +69,24 @@ button, .btn-suppr {
     font-weight: bold;
     cursor: pointer;
     transition: background 0.2s;
+    text-decoration: none
 }
-button:hover, .btn-suppr:hover {
-    background: #43a047;
+button:hover, .btn-primary:hover {
+    background: #4874a5;
+}
+.btn-suppr {
+    background: #d21919;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none
+}
+.btn-suppr:hover {
+    background: #a32a2a;
 }
 .ingredients-table {
     width: 100%;
@@ -99,6 +107,19 @@ button:hover, .btn-suppr:hover {
     gap: 8px;
     margin-bottom: 8px;
     flex-wrap: wrap;
+}
+/* Style pour les liens généraux */
+a {
+    color: #1976d2;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+a:hover {
+    color: #43a047;
+}
+/* Désactive le soulignement pour les liens-boutons */
+a.btn-primary, a.btn-suppr {
+    text-decoration: none !important;
 }
 @media (max-width: 900px) {
     .recette-box, .dashboard-container, .login-container {
