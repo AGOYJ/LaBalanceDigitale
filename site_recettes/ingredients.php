@@ -58,7 +58,16 @@ if ($search !== '') {
 $stmt = $pdo->prepare('SELECT id, nom, prix_kg FROM ingredients ' . $where . ' ORDER BY nom');
 $stmt->execute($params);
 $ingredients = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Si requête AJAX, retourner uniquement le tableau HTML
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+    ob_start();
+    include 'ingredients_table_ajax.php';
+    echo ob_get_clean();
+    exit;
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -67,59 +76,49 @@ $ingredients = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<nav class="menu">
-    <a href="dashboard.php">Accueil</a> |
-    <a href="recettes.php">Liste des recettes</a> |
-    <a href="ingredients.php">Liste des ingrédients</a> |
-    <a href="index.php?logout=1">Déconnexion</a>
-</nav>
-<div class="recette-box" style="max-width:700px;">
-    <h1>Ingrédients disponibles</h1>
-    <?php if (!empty($error)): ?>
-        <div style="color:#e74c3c;background:#fff0f0;border:1px solid #e74c3c;border-radius:6px;padding:10px;margin-bottom:18px;text-align:center;font-weight:500;"> <?= htmlspecialchars($error) ?> </div>
-    <?php endif; ?>
-    <form method="post" style="margin-bottom:18px;display:flex;gap:12px;align-items:center;">
-        <input type="text" name="nom" placeholder="Nom de l'ingrédient" required style="width:40%">
-        <input type="number" step="0.000001" name="prix_kg" placeholder="Prix au kg (€)" required style="width:30%">
-        <button type="submit" name="add_ingredient" class="btn-primary">+ Ajouter</button>
-    </form>
-    <form class="search-bar" method="get" action="ingredients.php" style="margin-bottom:18px;display:flex;gap:12px;align-items:center;">
-        <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Rechercher un ingrédient...">
-        <button type="submit" class="btn-primary">Rechercher</button>
-        <?php if ($search): ?>
-            <a href="ingredients.php">Réinitialiser</a>
-        <?php endif; ?>
-    </form>
-    <table class="ingredients-table">
-        <tr style="background:#eee;font-weight:bold;">
-            <td>Nom</td>
-            <td>Prix au kg (€)</td>
-            <td>Prix au g (€)</td>
-            <td>Actions</td>
-        </tr>
-        <?php foreach ($ingredients as $ing): ?>
-        <tr>
-            <td><?= htmlspecialchars($ing['nom']) ?></td>
-            <td>
-                <form method="post" style="display:inline;">
-                    <input type="hidden" name="id" value="<?= $ing['id'] ?>">
-                    <input type="number" step="0.000001" name="prix_kg" value="<?= htmlspecialchars($ing['prix_kg']) ?>" style="width:90px;">
-                    <button type="submit" name="edit_ingredient" class="btn-primary">💾</button>
-                </form>
-            </td>
-            <td><?= number_format($ing['prix_kg']/1000, 6, ',', ' ') ?></td>
-            <td>
-                <form method="post" style="display:inline;" onsubmit="return confirm('Supprimer cet ingrédient ?');">
-                    <input type="hidden" name="id" value="<?= $ing['id'] ?>">
-                    <button type="submit" name="delete_ingredient" class="btn-suppr">🗑️</button>
-                </form>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
-    <?php if (empty($ingredients)): ?>
-        <div style="color:#888;text-align:center;margin-top:18px;">Aucun ingrédient enregistré.</div>
-    <?php endif; ?>
-</div>
+    <div class="page-box">
+        
+        <div class="nav">
+            <h1>Les ingrédients</h1>
+            <a href="index.php">Liste des recettes</a>
+        </div>
+    
+
+        <?php if (!empty($error)): ?>
+            <div style="error"> <?= htmlspecialchars($error) ?> </div>
+        <?php endif; ?> 
+
+        <form class="form-box" method="post">
+            <input type="text" name="nom" placeholder="Nom de l'ingrédient" required style="width:30%">
+            <input type="number" step="0.001" name="prix_kg" placeholder="Prix au kg (€)" required style="width:30%">
+            <button type="submit" name="add_ingredient" class="btn-primary">+ Ajouter</button>
+        </form>
+
+        <form class="form-box" method="get" action="ingredients.php">
+            <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Rechercher un ingrédient..." autocomplete="off">
+        </form>
+
+        <div class="table-container" id="ingredients-table-container">
+            <?php include 'ingredients_table_ajax.php'; ?>
+        </div>
+
+            <script>
+            const searchInput = document.querySelector('input[name="search"]');
+            const tableContainer = document.getElementById('ingredients-table-container');
+            searchInput.addEventListener('input', function() {
+                const value = this.value;
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', 'ingredients.php?search=' + encodeURIComponent(value), true);
+                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        tableContainer.innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.send();
+            });
+            </script>
+
+    </div>
 </body>
 </html>

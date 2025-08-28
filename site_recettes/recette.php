@@ -79,10 +79,8 @@ foreach ($ingredients as $ing) {
 </head>
 <body>
 <nav class="menu">
-    <a href="dashboard.php">Accueil</a> |
-    <a href="recettes.php">Toutes les recettes</a> |
-    <a href="ingredients.php">Liste des ingrédients</a> |
-    <a href="index.php?logout=1">Déconnexion</a>
+    <a href="index.php">Toutes les recettes</a> |
+    <a href="ingredients.php">Liste des ingrédients</a>
 </nav>
 <?php
 // Suppression de la recette si demandé

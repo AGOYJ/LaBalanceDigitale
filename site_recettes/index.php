@@ -1,56 +1,79 @@
 <?php
 session_start();
 require_once 'config.php';
-if (!isset($pdo) || !$pdo) {
-    die('Erreur : la connexion à la base de données a échoué.');
+if (!isset($_SESSION['user_id'])) {
+    header('Location: index.php');
+    exit;
 }
 
-$error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username'] ?? '');
-    $password = $_POST['password'] ?? '';
-    if ($username && $password) {
-        $stmt = $pdo->prepare('SELECT * FROM utilisateurs WHERE username = ?');
-        $stmt->execute([$username]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            header('Location: dashboard.php');
-            exit;
-        } else {
-            $error = 'Identifiants invalides.';
-        }
-    } else {
-        $error = 'Veuillez remplir tous les champs.';
-    }
+// Gestion recherche et tri
+$search = trim($_GET['search'] ?? '');
+$order = ($_GET['order'] ?? '') === 'alpha' ? 'alpha' : 'date';
+$where = '';
+$params = [];
+if ($search !== '') {
+    $where = 'WHERE r.titre LIKE ?';
+    $params[] = "%$search%";
+}
+$orderBy = $order === 'alpha' ? 'r.titre ASC' : 'r.date_creation DESC';
+$sql = "SELECT r.id, r.titre, r.date_creation FROM recettes r $where ORDER BY $orderBy";
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
+$recettes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Si requête AJAX, retourner uniquement le tableau HTML
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+    ob_start();
+    include 'recettes_table_ajax.php';
+    echo ob_get_clean();
+    exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion</title>
+    <title>Recettes</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-card">
-            <h1>Connexion</h1>
-            <?php if ($error): ?>
-                <div class="login-error"> <?= htmlspecialchars($error) ?> </div>
-            <?php endif; ?>
-            <form action="" method="post">
-                <label for="username">Nom d'utilisateur :</label>
-                <input type="text" id="username" name="username" required autocomplete="username"><br>
-                <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" required autocomplete="current-password"><br>
-                <button type="submit">Se connecter</button>
-            </form>
-            <div style="margin-top:18px;">
-                <a href="inscription.php" style="color:#1976d2;">Créer un compte</a>
-            </div>
+    <div class="page-box">
+
+        <div class="nav">
+            <h1>Les recettes</h1>
+            <a href="ingredients.php">Liste des ingrédients</a>
         </div>
+
+        <div class="form-box">
+            <a href="ajouter_recette.php" class="btn-primary">+ Ajouter une recette</a>
+        </div>
+
+        <form class="form-box" method="get" action="index.php">
+            <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Rechercher une recette..." autocomplete="off">
+        </form>
+
+        <div class="table-container" id="recettes-table-container">
+            <?php include 'recettes_table_ajax.php'; ?>
+        </div>
+        
+        <script>
+        const searchInput = document.querySelector('input[name="search"]');
+        const tableContainer = document.getElementById('recettes-table-container');
+        searchInput.addEventListener('input', function() {
+            const value = this.value;
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'index.php?search=' + encodeURIComponent(value), true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    tableContainer.innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
+        });
+        </script>
+
     </div>
 </body>
 </html>

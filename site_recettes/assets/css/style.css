@@ -1,151 +1,177 @@
-/*
- * Style général sobre et responsive pour le gestionnaire de recettes
- */
-html, body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', 'Arial', sans-serif;
-    background: #f7f8fa;
-    color: #222;
-    min-height: 100vh;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-.menu {
-    background: #fff;
-    border-bottom: 1px solid #e0e0e0;
-    padding: 12px 0;
-    text-align: center;
-    font-size: 1.08em;
+
+body {
+  font-family: "Inter", sans-serif;
+  background: #f9fafb;
+  color: #111827;
+  line-height: 1.6;
 }
-.menu a:hover {
-    color: #43a047;
+.error {
+  color:#e74c3c;
+  background:#fff0f0;
+  border:1px solid #e74c3c;
+  border-radius:6px;
+  padding:10px;
+  margin-bottom:18px;
+  text-align:center;
+  font-weight:500;
 }
-.recette-box, .dashboard-container, .login-container {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px #e0e4ef;
-    margin: 32px auto 0 auto;
-    padding: 28px 32px;
-    max-width: 700px;
+
+/* Container principal */
+.page-box {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
 }
-.dashboard-container { max-width: 500px; }
-.login-container { max-width: 400px; }
-.login-card, .dashboard-card {
-    padding: 24px 18px;
-    border-radius: 10px;
-    background: #f9fafc;
-    box-shadow: 0 1px 6px #e0e4ef;
+
+/* Navigation */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
 }
-.login-error {
-    color: #d32f2f;
-    background: #fff0f0;
-    border: 1px solid #d32f2f;
-    border-radius: 6px;
-    padding: 10px;
-    margin-bottom: 18px;
-    text-align: center;
-    font-weight: 500;
+
+.nav h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1E40AF;
 }
-input, select, textarea, button {
-    font-family: inherit;
-    font-size: 1em;
-    border-radius: 6px;
-    border: 1px solid #b0b8d1;
-    padding: 8px;
-    margin-bottom: 12px;
-    box-sizing: border-box;
+
+.nav a {
+  text-decoration: none;
+  color: #1E40AF;
+  font-weight: 500;
 }
-input[type="number"] {
-    width: 110px;
+
+.nav a:hover {
+  text-decoration: underline;
 }
-input[type="text"], input[type="password"], textarea {
-    width: 100%;
+
+/* formulaire */
+.form-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
-button, .btn-primary {
-    background: #1976d2;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s;
-    text-decoration: none
+
+.form-box input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
 }
-button:hover, .btn-primary:hover {
-    background: #4874a5;
+
+.form-box input:focus {
+  border-color: #1E40AF;
+  outline: none;
 }
-.btn-suppr {
-    background: #d21919;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s;
-    text-decoration: none
+
+.add-recette-form-box {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #eee;
 }
-.btn-suppr:hover {
-    background: #a32a2a;
+
+.add-recette-form-box label {
+  margin-bottom: 6px;
+  font-weight: 400;
 }
-.ingredients-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 18px;
-    font-size: 1em;
+
+.add-recette-form-box input {
+  flex: 1;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
 }
-.ingredients-table td, .ingredients-table th {
-    border: 1px solid #e0e0e0;
-    padding: 8px 6px;
-    text-align: left;
+
+.textarea {
+  width:100%;
+  height:100px;
+  border-radius:6px;
+  border:1px solid #b0b8d1;
+  padding:10px;
+  margin-bottom:18px;
 }
-.ingredients-table tr:nth-child(even) {
-    background: #f5f7fa;
+
+/* Boutons */
+.btn-primary {
+  background: #1E40AF;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s;
 }
-.ingredient-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 8px;
-    flex-wrap: wrap;
+
+.btn-primary:hover {
+  background: #1E3A8A;
 }
-/* Style pour les liens généraux */
-a {
-    color: #1976d2;
-    text-decoration: underline;
-    transition: color 0.2s;
+
+.btn-view {
+  background: #10B981;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s;
 }
-a:hover {
-    color: #43a047;
+
+.btn-view:hover {
+  background: #059669;
 }
-/* Désactive le soulignement pour les liens-boutons */
-a.btn-primary, a.btn-suppr {
-    text-decoration: none !important;
+
+/* Tableau */
+.table-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
-@media (max-width: 900px) {
-    .recette-box, .dashboard-container, .login-container {
-        max-width: 98vw;
-        padding: 12px 2vw;
-    }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
 }
-@media (max-width: 600px) {
-    .menu {
-        font-size: 1em;
-        padding: 8px 0;
-    }
-    .recette-box, .dashboard-container, .login-container {
-        padding: 8px 2vw;
-        margin: 12px auto 0 auto;
-    }
-    .ingredients-table td, .ingredients-table th {
-        font-size: 0.98em;
-        padding: 6px 2px;
-    }
-    .ingredient-row {
-        flex-direction: column;
-        gap: 4px;
-    }
-    input[type="number"], input[type="text"], select, textarea {
-        width: 100% !important;
-        min-width: 0;
-    }
+
+table tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+table tr:hover {
+  background: #eef2ff;
+}
+
+table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: middle;
+}
+
+table td:first-child {
+  font-weight: 600;
+}
+
+table td input.form-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
 }

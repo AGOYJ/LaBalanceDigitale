@@ -123,30 +123,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </datalist>
 </head>
 <body>
-<nav class="menu">
-    <a href="dashboard.php">Accueil</a> |
-    <a href="recettes.php">Toutes les recettes</a> |
-    <a href="ingredients.php">Liste des ingrédients</a> |
-    <a href="index.php?logout=1">Déconnexion</a>
-</nav>
-<div class="recette-box" style="max-width:700px;">
-    <a href="recettes.php" style="display:inline-block;background:#1976d2;color:#fff;padding:8px 18px;border-radius:6px;text-decoration:none;font-weight:bold;margin-bottom:18px;">← Retour à la liste des recettes</a>
-    <h1 style="color:#1976d2;text-align:center;margin-bottom:24px;">Ajouter une recette</h1>
-    <?php if ($error): ?>
-        <div style="color:#e74c3c;background:#fff0f0;border:1px solid #e74c3c;border-radius:6px;padding:10px;margin-bottom:18px;text-align:center;font-weight:500;"> <?= htmlspecialchars($error) ?> </div>
-    <?php endif; ?>
-    <form method="post" style="max-width:520px;margin:auto;">
-        <label style="font-weight:500;">Titre de la recette :</label>
-        <input type="text" name="titre" required><br>
-        <label style="font-weight:500;">Prix de vente (€) :</label>
-        <input type="number" step="0.01" min="0" name="prix_vente" required><br>
-        <label style="font-weight:500;">Ingrédients :</label>
-        <div id="ingredients-list"></div>
-        <button type="button" onclick="addIngredientField()" style="background:#1976d2;color:#fff;border:none;border-radius:6px;padding:8px 18px;margin:10px 0 18px 0;cursor:pointer;font-weight:bold;">+ Ajouter un ingrédient</button><br>
-        <label style="font-weight:500;">Mode opératoire :</label>
-        <textarea name="mode_operatoire" required style="width:100%;height:100px;border-radius:6px;border:1px solid #b0b8d1;padding:10px;"></textarea><br>
-        <button type="submit" style="background:#43a047;color:#fff;border:none;border-radius:8px;padding:12px 0;width:100%;font-size:1.1em;font-weight:bold;cursor:pointer;margin-top:8px;box-shadow:0 2px 8px #b0b8d1;">Enregistrer la recette</button>
-    </form>
-</div>
+
+    <div class="page-box">
+        
+        <div class="nav">
+            <h1>Ajouter une recette</h1>
+            <a href="ingredients.php">Liste des ingrédients</a>
+        </div>
+
+        <div class="form-box">
+            <a href="index.php" class="btn-primary">← Retour à la liste des recettes</a>
+        </div>
+
+        <?php if ($error): ?>
+            <div style="color:#e74c3c;background:#fff0f0;border:1px solid #e74c3c;border-radius:6px;padding:10px;margin-bottom:18px;text-align:center;font-weight:500;"> <?= htmlspecialchars($error) ?> </div>
+        <?php endif; ?>
+
+        <form method="post" class="add-recette-form-box">
+            <label>Titre de la recette :</label>
+            <input type="text" name="titre" required >
+
+            <label>Prix de vente (€) :</label>
+            <input type="number" step="0.01" min="0" name="prix_vente" required >
+
+            <label>Ingrédients :</label>
+            <div id="ingredients-list"></div>
+            <button type="button" onclick="addIngredientField()" class="btn-primary">+ Ajouter un ingrédient</button>
+
+            <label style="margin-top:12px">Mode opératoire :</label>
+            <textarea name="mode_operatoire" required style="width:100%;height:100px;border-radius:6px;border:1px solid #b0b8d1;padding:10px;margin-bottom:18px;"></textarea>
+
+            <button type="submit" class="btn-primary" style="width:100%;font-size:1.1em;">Enregistrer la recette</button>
+        </form>
+        
+    </div>
 </body>
 </html>
