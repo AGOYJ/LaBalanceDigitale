@@ -12,7 +12,7 @@
                 <form method="post">
                     <input type="hidden" name="id" value="<?= $ing['id'] ?>">
                     <input class="form-input" type="number" step="0.001" name="prix_kg" value="<?= htmlspecialchars($ing['prix_kg']) ?>" style="width: 100px;">
-                    <button type="submit" name="edit_ingredient" class="btn-primary">💾</button>
+                    <button type="submit" name="edit_ingredient" class="btn-view">💾</button>
                 </form>
             </td>
             <td><?= number_format($ing['prix_kg']/1000, 5, ',', ' ') ?></td>

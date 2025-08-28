@@ -8,7 +8,7 @@
     <tr>
         <td><?= htmlspecialchars($recette['titre']) ?></td>
         <td><?= htmlspecialchars($recette['date_creation']) ?></td>
-        <td><a href="recette.php?id=<?= $recette['id'] ?>" class="btn btn-view">Détails</a></td>
+        <td><a href="recette.php?id=<?= $recette['id'] ?>" class="btn-view">Détails</a></td>
     </tr>
     <?php endforeach; ?>
 </table>
