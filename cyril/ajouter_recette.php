@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/cyril/config.php';
 
 
 // Récupérer la liste des ingrédients existants
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmtLink->execute([$recette_id, $ingredient_id, $qte, $unite]);
             }
         }
-        header('Location: recettes.php');
+        header('Location: /cyril/recettes.php');
         exit;
     } else {
         $error = 'Veuillez remplir tous les champs obligatoires et ajouter au moins un ingrédient.';
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Ajouter une recette</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/cyril/assets/css/style.css">
     <script>
     // Ajout dynamique d'ingrédients avec autocomplétion
     function addIngredientField() {
@@ -156,10 +156,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="page-box">
         <div class="nav">
             <h1>Ajouter une recette</h1>
-            <a href="ingredients.php">Liste des ingrédients</a>
+            <a href="/cyril/ingredients.php">Liste des ingrédients</a>
         </div>
         <div class="form-box">
-            <a href="index.php" class="btn-secondary">← Retour à la liste des recettes</a>
+            <a href="/cyril/index.php" class="btn-secondary">← Retour à la liste des recettes</a>
         </div>
 
         <?php if ($error): ?>
@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         <?php endif; ?>
 
-        <form method="post" class="add-recette-form-box">
+        <form method="post" action="/cyril/ajouter_recette.php" class="add-recette-form-box">
             <label for="titre">Titre de la recette :</label>
             <input type="text" id="titre" name="titre" required>
             <label for="prix_vente">Prix de vente (€) :</label>

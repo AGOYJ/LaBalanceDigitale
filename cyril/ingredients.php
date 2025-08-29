@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/cyril/config.php';
 
 // Ajout d'un ingrédient
 if (isset($_POST['add_ingredient'])) {
@@ -68,15 +68,14 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Liste des ingrédients</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Ingrédients</title>
+    <link rel="stylesheet" href="/cyril/assets/css/style.css">
 </head>
 <body>
     <div class="page-box">
         
         <div class="nav">
-            <h1>Les ingrédients</h1>
-            <a href="index.php">Liste des recettes</a>
+            <a href="/cyril/index.php">← Retour à la liste des recettes</a>
         </div>
     
 
@@ -117,4 +116,5 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 
     </div>
 </body>
+</html>
 </html>

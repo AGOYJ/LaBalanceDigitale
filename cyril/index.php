@@ -1,5 +1,11 @@
 <?php
-require_once '../config.php';
+// Affichage des erreurs pour le debug (à retirer en production)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Adapter le chemin vers config.php selon l'emplacement réel sur le serveur
+require_once $_SERVER['DOCUMENT_ROOT'] . '/cyril/config.php';
 
 // Gestion recherche et tri
 $search = trim($_GET['search'] ?? '');
@@ -24,32 +30,31 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Recettes</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/cyril/assets/css/style.css">
 </head>
 <body>
     <div class="page-box">
 
         <div class="nav">
             <h1>Les recettes</h1>
-            <a href="ingredients.php">Liste des ingrédients</a>
+            <a href="/cyril/ingredients.php">Liste des ingrédients</a>
         </div>
 
         <div class="form-box">
-            <a href="ajouter_recette.php" class="btn-primary">+ Ajouter une recette</a>
+            <a href="/cyril/ajouter_recette.php" class="btn-primary">+ Ajouter une recette</a>
         </div>
 
-        <form class="form-box" method="get" action="index.php">
+        <form class="form-box" method="get" action="/cyril/index.php">
             <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Rechercher une recette..." autocomplete="off">
         </form>
 
         <div class="table-container" id="recettes-table-container">
-            <?php include 'recettes_table_ajax.php'; ?>
+            <?php include __DIR__ . '/recettes_table_ajax.php'; ?>
         </div>
         
         <script>
@@ -58,7 +63,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         searchInput.addEventListener('input', function() {
             const value = this.value;
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'index.php?search=' + encodeURIComponent(value), true);
+            xhr.open('GET', '/cyril/index.php?search=' + encodeURIComponent(value), true);
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.onload = function() {
                 if (xhr.status === 200) {
