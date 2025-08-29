@@ -1,10 +1,6 @@
 <?php
-session_start();
 require_once 'config.php';
-if (!isset($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit;
-}
+
 // Ajout d'un ingrédient
 if (isset($_POST['add_ingredient'])) {
     $nom = trim($_POST['nom'] ?? '');

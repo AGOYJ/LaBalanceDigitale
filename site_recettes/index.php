@@ -1,10 +1,5 @@
 <?php
-session_start();
-require_once 'config.php';
-if (!isset($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit;
-}
+require_once '../config.php';
 
 // Gestion recherche et tri
 $search = trim($_GET['search'] ?? '');

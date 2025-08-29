@@ -1,10 +1,6 @@
 <?php
-session_start();
 require_once 'config.php';
-if (!isset($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit;
-}
+
 
 // Récupérer la liste des ingrédients existants
 $stmt = $pdo->query('SELECT id, nom, prix_kg FROM ingredients ORDER BY nom');

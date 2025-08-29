@@ -1,10 +1,6 @@
 <?php
-session_start();
 require_once 'config.php';
-if (!isset($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit;
-}
+
 $id = intval($_GET['id'] ?? 0);
 if (!$id) {
     echo '<p style="color:red;text-align:center;">Recette introuvable.</p>';
